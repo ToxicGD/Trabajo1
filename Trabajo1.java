@@ -3,7 +3,6 @@
  */
 
 package com.mycompany.trabajo1;
-
 /**
  *
  * @author Daimer
@@ -12,55 +11,64 @@ import javax.swing.JOptionPane;
 
 public class Trabajo1 {
 
-       static int tamanoVector = 6;
+        //Declaración del tamaño del vector
+    
+       static int tVector = 6;
 
     public static void main(String[] args) {
 
-        double[] lluviasCentro = new double[tamanoVector];
-        double[] lluviasNorte = new double[tamanoVector];
-        double[] lluviasSur = new double[tamanoVector];
+        double[] lluviaCentro = new double[tVector]; //vector de la región central
+        double[] lluviaNorte = new double[tVector]; //vector de la región Norte
+        double[] lluviaSur = new double[tVector]; //vector de la región sur
 
-        double promedioSemestralCentro = 0;
-        double menorLluviaSur = Double.MAX_VALUE;
-        int mesMenorLluviaSur = 0;
-        String regionMayorLluviaSemestral = "";
+        double promSemestreCentro = 0;
+        double minLluviaSur = Double.MAX_VALUE;
+        int mesMinLluviaSur = 0;
+        String regionMasLluviaSemestre = "";
 
-        for (int i = 0; i < tamanoVector; i++) {
-            lluviasCentro[i] = Double.parseDouble(JOptionPane.showInputDialog("Ingrese la cantidad de lluvia en la region Centro para el mes " + (i+1)));
-            lluviasNorte[i] = Double.parseDouble(JOptionPane.showInputDialog("Ingrese la cantidad de lluvia en la region Norte para el mes " + (i+1)));
-            lluviasSur[i] = Double.parseDouble(JOptionPane.showInputDialog("Ingrese la cantidad de lluvia en la region Sur para el mes " + (i+1)));
+        for (int i = 0; i < tVector; i++) {
+            //solicitando la información de la lluvias
+            lluviaCentro[i] = Double.parseDouble(JOptionPane.showInputDialog("Ingrese la cantidad de lluvia en la region Centro para el mes " + (i+1)));
+            lluviaNorte[i] = Double.parseDouble(JOptionPane.showInputDialog("Ingrese la cantidad de lluvia en la region Norte para el mes " + (i+1)));
+            lluviaSur[i] = Double.parseDouble(JOptionPane.showInputDialog("Ingrese la cantidad de lluvia en la region Sur para el mes " + (i+1)));
+            
+            //se suma el total de las lluvias de la region centro    
+            
+            promSemestreCentro += lluviaCentro[i];
 
-            promedioSemestralCentro += lluviasCentro[i];
-
-            if (lluviasSur[i] < menorLluviaSur) {
-                menorLluviaSur = lluviasSur[i];
-                mesMenorLluviaSur = i+1;
+            if (lluviaSur[i] < minLluviaSur) {
+                //obteniendo el mes con la menor cantidad de lluvia en el sur
+                minLluviaSur = lluviaSur[i];
+                mesMinLluviaSur = i+1;
             }
         }
+        //se saca el promedio de lluvias de la region centro
+        promSemestreCentro /= tVector;
+        //se declaran las variables que van recorrer los vectores y sumar los 
+        //valores de los seis meses del las tres regiones
+        double totLluviaCentro = 0;
+        double totLluviaNorte = 0;
+        double totLluviaSur = 0;
 
-        promedioSemestralCentro /= tamanoVector;
-
-        double totalLluviasCentro = 0;
-        double totalLluviasNorte = 0;
-        double totalLluviasSur = 0;
-
-        for (int i = 0; i < tamanoVector; i++) {
-            totalLluviasCentro += lluviasCentro[i];
-            totalLluviasNorte += lluviasNorte[i];
-            totalLluviasSur += lluviasSur[i];
+        for (int i = 0; i < tVector; i++) {
+            totLluviaCentro += lluviaCentro[i];
+            totLluviaNorte += lluviaNorte[i];
+            totLluviaSur += lluviaSur[i];
         }
-
-        if (totalLluviasCentro > totalLluviasNorte && totalLluviasCentro > totalLluviasSur) {
-            regionMayorLluviaSemestral = "Centro";
-        } else if (totalLluviasNorte > totalLluviasSur) {
-            regionMayorLluviaSemestral = "Norte";
+        //evaluar cuál es la región en la cuál más llueve en el valle de aburrá
+        if (totLluviaCentro > totLluviaNorte && totLluviaCentro > totLluviaSur) {
+            regionMasLluviaSemestre = "Centro";
+        } else if (totLluviaNorte > totLluviaSur) {
+            regionMasLluviaSemestre = "Norte";
         } else {
-            regionMayorLluviaSemestral = "Sur";
+            regionMasLluviaSemestre = "Sur";
         }
-
-        JOptionPane.showMessageDialog(null, "Promedio semestral de la región Centro: " + promedioSemestralCentro + "\n" +
-                                            "Mes con menor lluvia en la región Sur: " + mesMenorLluviaSur + "\n" +
-                                            "Región con mayor lluvia semestral: " + regionMayorLluviaSemestral);
+        
+        //Se imprime la información solicitada
+        
+        JOptionPane.showMessageDialog(null, "Promedio semestral de la región Centro: " + promSemestreCentro + "\n" +
+                                            "Mes con menor lluvia en la región Sur: " + mesMinLluviaSur + "\n" +
+                                            "Región con mayor lluvia semestral: " + regionMasLluviaSemestre);
     }
 
 }
